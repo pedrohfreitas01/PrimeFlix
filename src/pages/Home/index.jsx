@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import api from "../../service/api";
+import "./style.css";
+import { Link } from "react-router-dom";
 
 function Home() {
   const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadMovies() {
@@ -17,10 +20,20 @@ function Home() {
       let movies = res.data.results.slice(0, 10);
       console.log(movies);
       setMovies(movies);
+      setLoading(false);
     }
 
     loadMovies();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="loading">
+        <h2>Please wait, movies loading</h2>
+        <h2>. . .</h2>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -29,12 +42,15 @@ function Home() {
           {movies.map((movie) => {
             return (
               <div key={movie.id} className="movie">
+                <h2>{movie.title}</h2>
                 <img
                   src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
                   alt={movie.title}
                 />
-                <h2>{movie.title}</h2>
-                <p>{movie.overview}</p>
+
+                <Link to={`/movie/${movie.id}`} className="link">
+                  Details
+                </Link>
               </div>
             );
           })}

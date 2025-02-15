@@ -1,0 +1,24 @@
+.notfound {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 90px);
+  /* background-color: blue; */
+  margin-top: 10px;
+}
+
+.notfound h1 {
+  font-size: 100px;
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 900;
+  color: #333;
+}
+
+.link {
+  margin-top: 20px;
+  text-decoration: none;
+  font-size: 20px;
+}
