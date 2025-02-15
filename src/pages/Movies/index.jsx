@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import './style-info.css';
 
 import api from "../../service/api";
 
@@ -46,9 +47,20 @@ function Movie() {
           src={`https://image.tmdb.org/t/p/w200${movie.backdrop_path}`}
           alt={movie.title}
         />
-        <p>{movie.overview}</p>
-        <p>Release Date: {movie.release_date}</p>
-        <p>Rating: {movie.vote_average}</p>
+        <div className="sinopse">
+          <p>{movie.overview}</p>
+          <div className="info-movie">
+            <span>Release Date: {movie.release_date}</span>
+            <span>Rating: {movie.vote_average}</span>
+          </div>
+        </div>
+
+        <div className="area-buttons">
+          <button>Salvar</button>
+          <button>
+            <a href="#">Trailer</a>
+          </button>
+        </div>
       </div>
     </div>
   );
