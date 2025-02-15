@@ -48,7 +48,7 @@ function Home() {
                   alt={movie.title}
                 />
 
-                <Link to={`/movie/${movie.id}`} className="link">
+                <Link to={`movie/${movie.id}`} className="link">
                   Details
                 </Link>
               </div>
