@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import './style-info.css';
+import { useNavigate, useParams } from "react-router-dom";
+import "./style-info.css";
 
 import api from "../../service/api";
 
@@ -8,6 +8,8 @@ function Movie() {
   const { id } = useParams();
   const [movie, setMovie] = useState({});
   const [loading, setLoading] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function loadMovie() {
@@ -24,11 +26,32 @@ function Movie() {
         })
         .catch((err) => {
           console.log(err);
+          navigate("/", { replace: true });
+          return;
         });
     }
 
     loadMovie();
   });
+
+  function favoriteMovie() {
+    const movieList = localStorage.getItem("movieList");
+
+    let movieListArray = JSON.parse(movieList) || [];
+
+    const hasMovie = movieListArray.some((movieListArray) => 
+      movieListArray.id === movie.id
+    );
+
+    if (hasMovie) {
+      alert("Movie already in favorites");
+      return;
+    }
+
+    movieListArray.push(movie);
+    localStorage.setItem("movieList", JSON.stringify(movieListArray));
+    alert("Movie added to favorites");
+  }
 
   if (loading) {
     return (
@@ -56,9 +79,14 @@ function Movie() {
         </div>
 
         <div className="area-buttons">
-          <button>Salvar</button>
+          <button onClick={favoriteMovie}>Favorite</button>
           <button>
-            <a href="#">Trailer</a>
+            <a
+              target="_blank"
+              href={`https://youtube.com/results?search_query=${movie.title} trailer`}
+            >
+              Trailer
+            </a>
           </button>
         </div>
       </div>
